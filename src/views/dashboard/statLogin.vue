@@ -16,9 +16,8 @@ export default {
     }
   },
   data() {
-    return {
-      myChart: undefined
-    }
+    this.myChart = {}
+    return {}
   },
   watch: {
     data() {
@@ -30,51 +29,41 @@ export default {
     this.parseOption()
   },
   methods: {
-    parseOption: function() {
+    parseOption() {
       const option = {
-        title: {
-          //text: '登录人数'
-        },
         tooltip: {
           trigger: 'axis',
-          axisPointer: {
-            type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+          axisPointer: { // 坐标轴指示器，坐标轴触发有效
+            type: 'line' // 默认为直线，可选为：'line' | 'shadow'
           }
         },
         legend: {
-          data: ['登录人数']
-        },
-        grid: {
-          left: '3%',
-          right: '4%',
-          bottom: '3%',
-          containLabel: true
-        },
-        yAxis: {
-          axisLabel: {
-            interval: 0 // 设置成 0 强制显示所有标签。
-          },
-          splitLine: {
-            lineStyle: {
-              type: 'dashed'
-            }
-          },
-          type: 'value'
+          data: ['登录人数', '注册人数']
         },
         xAxis: {
-          axisLabel: {
-            interval: 0 // 设置成 0 强制显示所有标签。
-          },
           type: 'category',
+          axisTick: {show: false},
           data: this.data.dateList
+        },
+        yAxis: {
+          type: 'value'
         },
         series: [
           {
             name: '登录人数',
             type: 'line',
-            stack: 'line',
-            data: this.data.loginList
+            data: this.data.loginList,
+            label: {
+              show: false,
+              position: 'center'
+            }
+          },
+          {
+            name: '注册人数',
+            type: 'line',
+            data: this.data.registerList
           }
+
         ]
       };
       this.myChart.setOption(option)
